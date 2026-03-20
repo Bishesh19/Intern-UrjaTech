@@ -1,0 +1,29 @@
+
+.navbar{
+    
+    background-color: royalblue;
+    display: flex;
+    justify-content: space-evenly;
+}
+.header2{
+    color: rgb(0, 127, 238);
+    display: flex;
+    justify-content: center;
+}
+.header3{
+    color: rgb(95, 95, 196);
+    
+    display: flex;
+    justify-content: center;
+}
+.figure1{
+    display: flex;
+    justify-content: center;
+    width: 10rem;
+    height: 10rem;
+}
+.footer1{
+    
+    display: flex;
+    justify-content: center;
+}
