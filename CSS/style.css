@@ -1,0 +1,58 @@
+#header1{
+    color: aliceblue;
+    background-color: crimson;
+    text-align: center;
+}
+#p1{
+    color: rgb(253, 253, 253);
+    background-color: rgb(62, 254, 100);
+    
+}
+#button1{
+    background-color:orange;
+   
+   
+}
+.test1{
+    background-color:pink;
+    
+}
+.test{
+    color:blue;
+    font-size: 32px;
+}
+.test4{
+    background-color: aqua;
+    font-size: 24px;
+}
+#test3{
+
+    font-size: 24px;
+}
+#button2{
+    background-color: rgb(10, 10, 10);
+    color: white;
+}
+#button3{
+    background-color: rgb(224, 237, 48);
+    color: white;
+}
+#div1{
+    display: flex; justify-content: space-evenly;
+   
+}
+
+#footer1{
+      text-align: center;
+  padding: 5px;
+  background-color: DarkSalmon;
+  color: white;
+}
+#form1 {
+   
+   border-radius: 5px;
+   border: 1px solid #ccc;
+    padding: 20px;
+  display: flex;
+  justify-content: center;
+}
