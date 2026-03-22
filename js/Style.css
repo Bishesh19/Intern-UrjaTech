@@ -1,0 +1,58 @@
+#header1{
+    color: aliceblue;
+    background-color: crimson;
+    text-align: center;
+}
+
+#header2{
+    color: aliceblue;
+    background-color: crimson;
+    text-align: center;
+}
+#footer1{
+      text-align: center;
+  padding: 5px;
+  background-color: DarkSalmon;
+  color: white;
+}
+#form1 {
+   
+   border-radius: 5px;
+   border: 1px solid #ccc;
+    padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+#form2 {
+   
+   border-radius: 5px;
+   border: 1px solid #ccc;
+    padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+#cat {
+    
+    flex-direction: column;
+}
+
+#cat-button {
+    height: 50px;
+    width: 100px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    flex-direction: column;
+    border-radius: 5px;
+}
+
+
+#dog-button {
+    height: 50px;
+    width: 100px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    flex-direction: column;
+    border-radius: 5px;
+}
