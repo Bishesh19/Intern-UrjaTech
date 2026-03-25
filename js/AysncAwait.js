@@ -26,3 +26,38 @@ getUserFromDB(1)
     .catch(err => {
         console.error('Error:', err.message);
     });
+
+    // using async/await
+const loadUser = async (id) => {
+  try {
+    const user = await getUserFromDB(id);
+    console.log("Found:", user.name);
+  } catch (err) {
+    console.log("Error:", err.message);
+  }
+};
+
+loadUser(1);
+loadUser(99);
+
+// Fetch API Example
+const fetchUser = async (id) => {
+  try {
+    const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+
+    if (!res.ok) {
+      throw new Error(`HTTP Error: ${res.status}`);
+    }
+
+    const user = await res.json();
+
+    const { name, email, address: { city } } = user;
+
+    console.log(`${name} | ${email} | City: ${city}`);
+  } catch (err) {
+    console.log("Failed:", err.message);
+  }
+};
+
+fetchUser(1);
+fetchUser(999); // 404 case
