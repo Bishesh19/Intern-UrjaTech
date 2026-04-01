@@ -30,6 +30,6 @@ function App() {
     <button onClick={() => alert('button is clicked!')}> Alert Click </button>
     </div>
   )
-} 
+}  
 
 export default App    
