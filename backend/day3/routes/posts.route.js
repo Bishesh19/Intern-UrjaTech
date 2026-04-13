@@ -1,66 +1,54 @@
-/* global module */
+
 const express = require('express');
 const router  = express.Router();
+const AppError = require('../utils/AppError');
+const asyncHandler = require('../utils/asyncHandler');
+const Post = require('../models/Post');
 
-// Data lives here for now — moves to a database on Day 6
-let posts = [
-  { id: 1, title: 'Getting Started with Node.js',   content: 'Node.js is a JavaScript runtime built on Chrome V8 engine.', author: 'Yojjal',  tags: ['node', 'javascript'], createdAt: '2025-01-01T10:00:00Z' },
-  { id: 2, title: 'Why Express Makes Life Easier',  content: 'Express is a minimal web framework for Node.js.',              author: 'Yojjal',  tags: ['express', 'node'],   createdAt: '2025-01-02T09:00:00Z' },
-  { id: 3, title: 'Understanding REST APIs',        content: 'REST stands for Representational State Transfer.',              author: 'Student', tags: ['rest', 'api'],       createdAt: '2025-01-03T11:00:00Z' },
-];
-let nextId = 4;
+router.get('/', asyncHandler(async (req, res, next) => {
+  const filter = {};
+  if (req.query.author)  filter.author = req.query.author;
+  if (req.query.tags) filter.tags = { $in: req.query.tags.split(',') };
+  const posts = await Post.find(filter).sort({ createdAt: -1 });
 
-// GET /posts
-router.get('/', (req, res) => {
-  const { author } = req.query;
-  if (author) {
-    return res.json({
-      success: true,
-      data: posts.filter(p => p.author.toLowerCase() === author.toLowerCase()),
-    });
-  }
-  res.json({ success: true, data: posts });
-});
+  res.json({ success: true, count: posts.length, data: posts });
+}));
 
 // GET /posts/:id
-router.get('/:id', (req, res) => {
-  const post = posts.find(p => p.id === parseInt(req.params.id));
-  if (!post) return res.status(404).json({ success: false, error: 'Post not found' });
+router.get('/:id',asyncHandler(async (req, res, next) => {
+
+  const post = await Post.findById(req.params.id);
+  if (!post) {
+    throw new AppError('Post not found', 404);
+  }  
   res.json({ success: true, data: post });
-});
+} 
+));
 
 // POST /posts
-router.post('/', (req, res) => {
-  const { title, content, author, tags } = req.body;
-  if (!title || !content || !author) {
-    return res.status(400).json({ success: false, error: 'Missing required fields: title, content, author' });
-  }
-  const newPost = { id: nextId++, title, content, author, tags: tags || [], createdAt: new Date().toISOString() };
-  posts.push(newPost);
-  res.status(201).json({ success: true, data: newPost });
-});
+router.post('/', asyncHandler(async (req, res, next) => {
+  const post = await Post.create(req.body);
+  res.status(201).json({ success: true, data: post });
+}));
 
 // PUT /posts/:id
-router.put('/:id', (req, res) => {
-  const id    = parseInt(req.params.id);
-  const index = posts.findIndex(p => p.id === id);
-  if (index === -1) return res.status(404).json({ success: false, error: 'Post not found' });
-  const { title, content, author, tags } = req.body;
-  if (!title || !content || !author) {
-    return res.status(400).json({ success: false, error: 'Missing required fields' });
+router.put('/:id', asyncHandler(async (req, res, next) => {
+  const post = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+  if (!post) {
+    throw new AppError('Post not found', 404);
   }
-  posts[index] = { id, title, content, author, tags: tags || [], createdAt: posts[index].createdAt, updatedAt: new Date().toISOString() };
-  res.json({ success: true, data: posts[index] });
-});
+  res.json({ success: true, data: post });
+}));
 
 // DELETE /posts/:id
-router.delete('/:id', (req, res) => {
-  const id    = parseInt(req.params.id);
-  const index = posts.findIndex(p => p.id === id);
-  if (index === -1) return res.status(404).json({ success: false, error: 'Post not found' });
-  const deleted = posts.splice(index, 1)[0];
-  res.json({ success: true, data: deleted });
-});
+router.delete('/:id', asyncHandler(async (req, res, next) => {
+  const post = await Post.findById(req.params.id);
+  if (!post) throw new AppError('Post not found', 404);
+  
+  res.json({ success: true, data: post });
+}));
+    
+
 
 
 module.exports = router;
