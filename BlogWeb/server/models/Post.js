@@ -5,12 +5,12 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Title is required'],
         trim: true,
-        minLength: [10, 'limit exceeded'],
+        minLength: [0, 'limit exceeded'],
     },
     content: {
         type: String,
         required: [true, 'Content is required'],
-        minLength: [10, 'limit exceeded'],
+        minLength: [0, 'limit exceeded'],
     },
     author: {
         type: String,
